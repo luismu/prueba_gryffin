@@ -26,7 +26,7 @@ class HomeController extends BaseController {
 
 		
 
-		return View::make('home.home', array("paginacion"=> $paginacion));
+		return View::make('home.home', array("paginacion"=> $paginacion ));
 	}
 
 

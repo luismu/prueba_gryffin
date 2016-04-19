@@ -28,5 +28,6 @@ Route::resource('/roles','RolesController');
 Route::resource('/posts','PostController');
 
 Route::get('/permisos','PermisosController@index');
+
 Route::get('/permisos/asignar','PermisosController@asignar');
 Route::get('/permisos/desasignar','PermisosController@desasignar');

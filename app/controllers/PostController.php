@@ -9,11 +9,25 @@ class PostController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
-		$posts = Post::all();
+		//$posts = Post::all();  return View::make('posts.index', array('posts' => $posts));->with('posts', $posts);
 		
-		 return View::make('posts.posts', array('posts' => $posts));
 
+		$posts = Post::with('user');
+		$posts = Post::orderBy('created_at', 'DESC')->paginate(10);
+		return View::make('posts.index', compact('posts'));
+
+		
+        //return View::make('posts.index')->with('posts', $posts);
+
+		
+
+	}
+
+	public function listposthome()
+	{
+		# code...
+		$posts = Post::all();
+        return View::make('home.home', array('posts' => $posts));
 	}
 
 
@@ -35,16 +49,27 @@ class PostController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+	 /*$post = new Post();
+		 $post->body = Input::get('body');
+        $post->privacy = Input::get('privacy')
+        $post->save();
+		*/
 	public function store()
 	{
-		//
-		$post = new Post();
 		
-        $post->name = Input::get('body');
-        $post->save();
-        
-        return Redirect::route('home.home');
+		
 
+			$post = new Post;
+            $post->body       = Input::get('body');
+            $post->privacy    = Input::get('privacy');
+           	$post['user_id'] = Auth::user()->id;
+            $post->save();
+
+           
+            return Redirect::to('posts');
+
+        
 	}
 
 
